@@ -26,21 +26,7 @@ app.get("/last", (req, res) => {
 });
 
 app.get("/middle", (req, res) => {
-  const middle = Math.floor(books.length / 2);
-
-  console.log(`Total libros ${books.length}`);
-  console.log(`Libro de la mitad ${Number(books[middle])}`);
-
-  res.status(200).json(books[middle]);
-});
-
-app.get("/middle", (req, res) => {
-  const middle = Math.floor(books.length / 2);
-
-  console.log(`Total libros ${books.length}`);
-  console.log(`Libro de la mitad ${Number(books[middle])}`); //No va
-
-  res.status(200).json(books[middle]);
+  res.status(200).json(books[Math.floor(books.length / 2)]);
 });
 
 // app.get("/author/dante-alighieri", (req, res) => {
@@ -152,17 +138,15 @@ app.get("/country/at-least/:country", (req, res) => {
 app.get("/pages/all-greater/:pagesMax", (req, res) => {
   const pages = req.params.pagesMax
   let thereIs = true;
-  books.forEach(book => {
-    if (book.pages < pages) {
-      thereIs = false;
-    }
-    return thereIs;
-  });
-  // if (books.find(libro => {
-  //   if (libro.country.toLowerCase() == country.toLowerCase()) {
-  //     thereIs = true;
+  // books.forEach(book => {
+  //   if (book.pages < pages) {
+  //     thereIs = false;
   //   }
-  // }))
+  //   return thereIs;
+  // });
+  if (books.find(libro => libro.pages < pages)) {
+    thereIs = false;
+  }
     res.json(thereIs);
 });
 
